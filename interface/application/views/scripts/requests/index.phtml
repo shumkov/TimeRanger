@@ -1,0 +1,10 @@
+<h1><?php echo $this->escape($this->application) ?></h1>
+<ul>
+<? foreach($this->requests as $request) { ?>
+    <li><a href="<?php echo $this->url(array('request' => $this->escape($request->name), 'application' => $this->escape($this->application)), 'request')?>"><?php echo $this->escape($request->name)?></a> <?php echo sprintf('%.4f', $this->escape($request->elapsedTime))?></li>
+<? } ?>
+</ul>
+<ul>
+    <li><a href="<?php echo $this->url(array('application' => $this->escape($this->application)), 'averageRequests')?>">Average</a></li>
+    <li><a onclick="return confirm('You are sure to cleanup?')" href="<?php echo $this->url(array('application' => $this->escape($this->application)), 'cleanupRequests')?>">Cleanup</a></li>
+</ul>

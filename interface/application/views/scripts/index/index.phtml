@@ -1,0 +1,10 @@
+<h1>Applications</h1>
+<?php if (!empty($this->applications)) { ?>
+    <ul>
+    <? foreach($this->applications as $application) { ?>
+        <li><a href="<?php echo $this->url(array('application' => $this->escape($application)), 'requests') ?>"><?php echo $this->escape($application) ?></a></li>
+    <? } ?>
+    </ul>
+<?php } else { ?>
+<p>Empty.</p>
+<?php } ?>

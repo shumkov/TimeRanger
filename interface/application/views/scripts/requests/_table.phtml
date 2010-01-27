@@ -1,0 +1,18 @@
+<?php if ($this->view == 'flat') { ?>
+    <a href="<?php echo $this->url(array('view'=>'flat')) ?>">Tree</a>
+<?php } else { ?>
+    <a href="<?php echo $this->url(array('view'=>'tree')) ?>">Flat</a>
+<?php }?>
+
+<table>
+<thead>
+    <tr>
+        <td>Call</td>
+    </tr>
+</thead>
+<tbody>
+<?php foreach(array() as $a) { ?>
+    <tr></tr>
+<?php } ?>
+</tbody>
+</table>
