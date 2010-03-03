@@ -1,49 +1,38 @@
 <?php
 
 /**
- * @see Zend_Db_Table_Abstract
- */
-require_once 'Zend/Db/Table.php';
-
-/**
  * @see Zend_Db_Table_Row_Abstract
  */
 require_once 'TimeRanger/Storage/Abstract.php';
 
-class TimeRanger_Storage_Db extends TimeRanger_Storage_Abstract
+class TimeRanger_Storage_Redis extends TimeRanger_Storage_Abstract
 {
     protected $_table;
 
-	protected $_options = array(
+    protected $_options = array(
        'dbAdapter'             => null,
-	   'tableName'             => 'timeranger',
-	   'applicationNameColumn' => 'application',
+       'tableName'             => 'timeranger',
+       'applicationNameColumn' => 'application',
        'requestNameColumn'     => 'request',
-	   'dataColumn'            => 'data',
-	   'elapsedTimeColumn'     => 'elapsed_time',
+       'dataColumn'            => 'data',
+       'elapsedTimeColumn'     => 'elapsed_time',
        'datetimeColumn'        => 'datetime'
-	);
+    );
 
-	public function __construct(array $options = array())
-	{
+    public function __construct(array $options = array())
+    {
         parent::__construct($options);
-
-        $tableConfig = array(
-            Zend_Db_Table::NAME    => $this->_options['tableName'],
-            Zend_Db_Table::ADAPTER => $this->_options['dbAdapter'],
-        );
-
-        $this->_table = new Zend_Db_Table($tableConfig);
-
-        try {
-            $this->_table->info();
-        } catch (Zend_Db_Statement_Exception $e) {
-            $this->_createTable();
+        
+        if (!class_exists('Rediska')) {
+            require_once 'TimeRanger/Storage/Exception.php';
+            throw new TimeRanger_Storage_Exception(get_class($this) . " adapter require Rediska library");
         }
-	}
 
-	public function saveRequest($applicationName, $requestName, $data, $elapsedTime)
-	{
+        $this->_rediska = new Rediska($options);
+    }
+
+    public function saveRequest($applicationName, $requestName, $data, $elapsedTime)
+    {
         $row = array(
             $this->_options['applicationNameColumn'] => $applicationName,
             $this->_options['requestNameColumn']     => $requestName,
@@ -53,7 +42,7 @@ class TimeRanger_Storage_Db extends TimeRanger_Storage_Abstract
         );
 
         return $this->_table->insert($row);
-	}
+    }
 
     public function getApplications()
     {
@@ -66,7 +55,7 @@ class TimeRanger_Storage_Db extends TimeRanger_Storage_Abstract
         return $this->_table->getAdapter()->fetchCol($select);
     }
 
-	public function getAverageRequests($applicationName)
+    public function getAverageRequests($applicationName)
     {
         $select = $this->_table
                        ->select()

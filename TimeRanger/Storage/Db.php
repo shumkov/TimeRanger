@@ -1,11 +1,6 @@
 <?php
 
 /**
- * @see Zend_Db_Table_Abstract
- */
-require_once 'Zend/Db/Table.php';
-
-/**
  * @see Zend_Db_Table_Row_Abstract
  */
 require_once 'TimeRanger/Storage/Abstract.php';
@@ -28,11 +23,17 @@ class TimeRanger_Storage_Db extends TimeRanger_Storage_Abstract
 	{
         parent::__construct($options);
 
+        if (!class_exists('Zend_Db')) {
+        	require_once 'TimeRanger/Storage/Exception.php';
+        	throw new TimeRanger_Storage_Exception(get_class($this) . " adapter require Zend_Db library");
+        }
+
         $tableConfig = array(
             Zend_Db_Table::NAME    => $this->_options['tableName'],
             Zend_Db_Table::ADAPTER => $this->_options['dbAdapter'],
         );
 
+        require_once 'Zend/Db/Table.php';
         $this->_table = new Zend_Db_Table($tableConfig);
 
         try {

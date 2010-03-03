@@ -1,6 +1,6 @@
 <?php
 
-class TimeRangerUi_Application_Resource_Storage extends Zend_Application_Resource_ResourceAbstract
+class TimeInspector_Application_Resource_Storage extends Zend_Application_Resource_ResourceAbstract
 {
     public function init()
     {

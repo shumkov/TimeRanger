@@ -1,6 +1,6 @@
 <?php
 
-class TimeRangerUi_Requests
+class TimeInspector_Requests
 {
 	public static function average($requests)
 	{

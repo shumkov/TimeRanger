@@ -1,5 +1,6 @@
 <?php
-class TimeRangerUi_View_Helper_Table
+
+class TimeInspector_View_Helper_Table
 {
     protected static $_metrics = array("wt" => array("Wall" , "microsecs" , "walltime") , "ut" => array("User" , "microsecs" , "user cpu time") , "st" => array("Sys" , "microsecs" , "system cpu time") , "cpu" => array("Cpu" , "microsecs" , "cpu time") , "mu" => array("MUse" , "bytes" , "memory usage") , "pmu" => array("PMUse" , "bytes" , "peak memory usage") , "samples" => array("Samples" , "samples" , "cpu time"));
     protected static $_sortableColumns = array("fn" => 1 , "ct" => 1 , "wt" => 1 , "excl_wt" => 1 , "ut" => 1 , "excl_ut" => 1 , "st" => 1 , "excl_st" => 1 , "mu" => 1 , "excl_mu" => 1 , "pmu" => 1 , "excl_pmu" => 1 , "cpu" => 1 , "excl_cpu" => 1 , "samples" => 1 , "excl_samples" => 1);
@@ -13,10 +14,10 @@ class TimeRangerUi_View_Helper_Table
         }
         $view = $request->getParam('view');
         $view = 'flat';
-        
+
         $stats = array("fn" , "ct" , "Calls%");
         $pc_stats = $stats;
-        
+
         $metrics = array();
         foreach (self::$_metrics as $metric => $desc) {
             if (isset($data["main()"][$metric])) {
@@ -116,7 +117,7 @@ class TimeRangerUi_View_Helper_Table
                                         'run', $run2));
 
     print("<h3><center>Overall Diff Summary</center></h3>");
-    print('<table border=1 cellpadding=2 cellspacing=1 width="30%" '
+    print('<Table border=1 cellpadding=2 cellspacing=1 width="30%" '
           .'rules=rows bordercolor="#bdc7d8" align=center>' . "\n");
     print('<tr bgcolor="#bdc7d8" align=right>');
     print("<th></th>");
@@ -146,14 +147,14 @@ class TimeRangerUi_View_Helper_Table
       print_td_pct($totals_2[$m] - $totals_1[$m], $totals_1[$m], true);
       print('<tr>');
     }
-    print('</table>');
+    print('</Table>');
 
     $callgraph_report_title = '[View Regressions/Improvements using Callgraph Diff]';
 
   } else {
     print("<p><center>\n");
 
-    print('<table cellpadding=2 cellspacing=1 width="30%" '
+    print('<Table cellpadding=2 cellspacing=1 width="30%" '
           .'bgcolor="#bdc7d8" align=center>' . "\n");
     echo "<tr>";
     echo "<th style='text-align:right'>Overall Summary</th>";
@@ -176,7 +177,7 @@ class TimeRangerUi_View_Helper_Table
       echo "</tr>";
     }
 
-    echo "</table>";
+    echo "</Table>";
     print("</center></p>\n");
 
     $callgraph_report_title = '[View Full Callgraph]';

@@ -10,6 +10,7 @@ class ErrorController extends Zend_Controller_Action
         switch ($errors->type) { 
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
+            case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
         
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);

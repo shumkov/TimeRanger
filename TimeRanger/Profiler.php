@@ -48,7 +48,7 @@ class TimeRanger_Profiler
             self::$_protectConstruct = true;
         }
 
-        if (!$probability ||  mt_rand(1, $probability) == 1) {
+        if (!$probability || mt_rand(1, $probability) == 1) {
             $flags = 0;
             if (self::$_options['bulitins']) {
                 $flags += XHPROF_FLAGS_NO_BUILTINS;
